@@ -82,20 +82,4 @@ router.put('/:userID', utilities.validateToken, (req, res) => {
     userController.update(req, res);
 })
 
-// ver este depois
-
-//    /**
-//     * @route DELETE /users/:userID
-//     * @group Users
-//     * @param {object} id.path - Id do utilizador
-//     * @returns {object} 204 - Utilizador eliminado
-//     * @returns {Error} 401 - É preciso estar autenticado
-//     * @returns {Error} 403 - Utilizador sem permissão
-//     * @returns {Error} 404 - Utilizador não existe/encontrado
-//     * @returns {Error} 500 - Algo deu errado
-//     * @security Bearer
-//     */
-//    router.delete('/:userID', utilities.validateToken, (req, res) => {
-//        userController.delete(req, res);
-//    })
 module.exports = router;

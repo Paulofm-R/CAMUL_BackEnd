@@ -21,7 +21,7 @@ app.get('/', function (req, res) {
 app.use('/users', require('./routes/users.routes.js'))
 
 
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.on3a1.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@isepbd.szvxel9.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
