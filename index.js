@@ -19,6 +19,7 @@ app.get('/', function (req, res) {
 
 // routing middleware
 app.use('/users', require('./routes/users.routes.js'))
+app.use('/categories', require('./routes/categories.routes.js'))
 
 
 mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@isepbd.szvxel9.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`, {
