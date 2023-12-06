@@ -42,21 +42,12 @@ exports.login = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
-    let currentDate = new Date();
-
-    console.log(currentDate);
-    
-    const bcryptPassword = bcrypt.hashSync(req.body.password, 10);
-
-    console.log(bcryptPassword);
-
     const user = new User({
         name: req.body.name,
         email: req.body.email,
-        password: bcryptPassword,
+        password: bcrypt.hashSync(req.body.password, 10),
+        createdUser: new Date()
     });
-
-    console.log(user);
 
     try {
         await user.save();
