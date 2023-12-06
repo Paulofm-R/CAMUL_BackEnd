@@ -16,10 +16,10 @@ const utilities = require('../utilities/utilities.js');
  * @security Bearer
  */
 router.post('/', 
-utilities.isAdmin,
 [
     body('name').notEmpty().escape(),
-], (req, res) => {
+], async (req, res) => {
+    await utilities.isAdmin;
     const errors = validationResult(req);
     if (errors.isEmpty()) {
         categoriesController.create(req, res);
@@ -33,7 +33,7 @@ utilities.isAdmin,
 /**
  * @route GET /categories
  * @group Categories
- * @returns {object} 200 - List of techniques - e.g. [{name: "Geriatrics"}, {...}]
+ * @returns {object} 200 - List of categories - e.g. [{name: "Geriatrics"}, {...}]
  * @returns {Error} 500 - Something wrong happened
  */
 router.get('/', (req, res) => {
@@ -64,7 +64,8 @@ router.get('/:categorieID', (req, res) => {
  * @returns {Error} 500 - Something wrong happened
  * @security Bearer
  */
-router.put('/:categorieID', utilities.isAdmin, (req, res) => {
+router.put('/:categorieID', async (req, res) => {
+    await utilities.isAdmin;
     categoriesController.update(req, res);
 })
 
@@ -79,7 +80,8 @@ router.put('/:categorieID', utilities.isAdmin, (req, res) => {
  * @returns {Error} 500 - Something wrong happened
  * @security Bearer
  */
-router.delete('/:categorieID', utilities.isAdmin, (req, res) => {
+router.delete('/:categorieID', async (req, res) => {
+    await utilities.isAdmin;
     categoriesController.delete(req, res);
 })
 

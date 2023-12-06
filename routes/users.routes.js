@@ -47,7 +47,8 @@ router.post('/register', [
  * @returns {Error} 500 - Something went wrong
  * @security Bearer
  */
-router.get('/', utilities.isAdmin, (req, res) => {
+router.get('/',  async (req, res) => {
+    await utilities.isAdmin;
     userController.getAll(req, res);
 })
 

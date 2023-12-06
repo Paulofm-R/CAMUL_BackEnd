@@ -7,7 +7,7 @@ exports.create = async (req, res) => {
 
     try {
         await categorie.save()
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             msg: "New category created successfully!",
             URL: `/categories/${categorie._id}`
@@ -32,7 +32,7 @@ exports.getAll = async (req, res) => {
             .find()
             .select('name')
             .exec();
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             categories: data
         });
@@ -55,13 +55,13 @@ exports.findCategorie = async (req, res) => {
         const categorie = await Categories.findById(req.params.categorieID).exec();
 
         if (categorie === null) {
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 msg: `Unable to find any category with the ID ${req.params.categorieID}`
             })
         }
 
-        res.json({
+        return res.json({
             success: true,
             categorie: categorie
         })
@@ -82,20 +82,20 @@ exports.findCategorie = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         const categorie = await Categories.findByIdAndUpdate(req.params.categorieID, req.body).exec();
-        console.log(categorie);
 
         if (!categorie) {
             return res.status(404).json({
                 message: `Cannot update category with id=${req.params.categorieID}. Please check if this already exists.`
             });
         }
-        res.status(200).json({
+
+        return res.status(200).json({
             message: `Category updated successfully!`
         });
+
+        return
     } catch (err) {
-        res.status(500).json({
-            message: `Error updating category.`
-        });
+        return res.status(500).json({ err });
     }
 }
 
@@ -104,16 +104,16 @@ exports.delete = async (req, res) => {
         const categorie = await Categories.findByIdAndRemove(req.params.categorieID).exec()
 
         if (!categorie) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: `It is not possible to delete the technique with id=${req.params.categorieID} as it does not exist.`
             });
         } else {
-            res.status(200).json({
+            return res.status(200).json({
                 message: `Technique with id=${req.params.categorieID} was successfully deleted!`
             })
         }
     } catch (err) {
-        res.status(500).json({
+        return res.status(500).json({
             message: `Error deleting technique with id=${req.params.categorieID}`
         });
     };

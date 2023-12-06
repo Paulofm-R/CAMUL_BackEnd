@@ -1,8 +1,8 @@
 const options = {
     swaggerDefinition: {
         info: {
-            description: 'Surrealismo API for ESMAPP project',
-            title: "Surrealismo API",
+            description: 'Mocc API for ESMAPP project',
+            title: "Mooc API",
             version: "1.0.0"
         },
         host: 'localhost:3000',

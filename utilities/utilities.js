@@ -11,30 +11,28 @@ const generateToken = (user_info) => {
 
 const validateToken = async (req, res, next) => {
     const header = req.headers['x-access-token'] || req.headers.authorization;
-    if (typeof header === 'undefined') {
+    if (typeof header === 'undefined')
         return res.status(401).json({ success: false, message: 'No tokens provided!' })
-    }
+
     const bearer = header.split(' ');
     const token = bearer[1];
     try {
         let decoded = jwt.verify(token, secret);
         const user = await User.findById(decoded.data.id).select('type').exec();
 
-        if (!user) {
+        if (!user)
             return res.status(404).json({ success: false, msg: "Invalid email" });
-        }
 
         req.userID = decoded.data.id;
         req.userType = user.type;
         return next();
     } catch (err) {
-        if (err.name === "TokenExpiredError") {
+        if (err.name === "TokenExpiredError")
             return res.status(401).json({ success: false, message: "Oops, your token has expired! Please log in again" })
-        } else if (err.name === "JsonWebTokenError") {
+        else if (err.name === "JsonWebTokenError")
             return res.status(401).json({ success: false, message: "Malformed JWT" });
-        } else {
+        else
             return res.status(401).json({ success: false, message: "Not authorized!" })
-        }
     }
 }
 
@@ -42,9 +40,9 @@ const isAdmin = async (req, res, next) => {
     await validateToken(req, res, next);
     if (req.userType === 'admin') {
         return next();
-    } else {
-        return res.status(401).json({ success: false, message: "User without permission!" })
     }
+    else
+        return res.status(401).json({ success: false, message: "User without permission!" });
 };
 
 exports.generateToken = generateToken;
