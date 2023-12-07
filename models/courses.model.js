@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
     certificate: { type: String, required: [true, 'The certificate is missing!'] },
     comments: { type: Array, default: []},
     moreInfo: { type: String, default: ''},
-    rating: { type: Double, default: 0.0},
+    rating: { type: Number, default: 0.0},
     time: { type: String, required: [true, 'The time is missing!'] },
 });
 const Course = mongoose.model("Courses", schema);

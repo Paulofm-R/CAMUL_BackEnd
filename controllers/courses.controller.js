@@ -1,16 +1,14 @@
-const Categories = require('../models/categories.model.js');
+const Courses = require('../models/courses.model.js');
 
 exports.create = async (req, res) => {
-    const categorie = new Categories({
-        name: req.body.name,
-    })
+    const course = new Courses(req.body)
 
     try {
-        await categorie.save()
+        await course.save()
         return res.status(201).json({
             success: true,
-            msg: "New category created successfully!",
-            URL: `/categories/${categorie._id}`
+            msg: "New course created successfully!",
+            URL: `/courses/${course._id}`
         });
     } catch (err) {
         if (err.name === "ValidationError") {
@@ -20,7 +18,7 @@ exports.create = async (req, res) => {
             });
             return res.status(400).json({
                 success: false,
-                msg: err.message || "An error occurred while creating the new category."
+                msg: err.message || "An error occurred while creating the new course."
             })
         }
     }
@@ -28,13 +26,13 @@ exports.create = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        let data = await Categories
+        let data = await Courses
             .find()
-            .select('name')
+            .select('title units description categories time')
             .exec();
         return res.status(200).json({
             success: true,
-            categories: data
+            courses: data
         });
     } catch (err) {
         if (err.name === "ValidationError") {
@@ -44,26 +42,26 @@ exports.getAll = async (req, res) => {
             });
             return res.status(400).json({
                 success: false,
-                msg: err.message || "An error occurred while retrieving the categories."
+                msg: err.message || "An error occurred while retrieving the courses."
             })
         }
     }
 }
 
-exports.findCategory = async (req, res) => {
+exports.findCourse = async (req, res) => {
     try {
-        const categorie = await Categories.findById(req.params.categoryID).exec();
+        const course = await Courses.findById(req.params.courseID).exec();
 
-        if (categorie === null) {
+        if (course === null) {
             return res.status(404).json({
                 success: false,
-                msg: `Unable to find any category with the ID ${req.params.categoryID}`
+                msg: `Unable to find any course with the ID ${req.params.courseID}`
             })
         }
 
         return res.json({
             success: true,
-            categorie: categorie
+            course: course
         })
     } catch (err) {
         if (err.name === "ValidationError") {
@@ -73,7 +71,7 @@ exports.findCategory = async (req, res) => {
             });
             return res.status(400).json({
                 success: false,
-                msg: `Error retrieving category with ID ${req.params.categoryID}.`
+                msg: `Error retrieving course with ID ${req.params.courseID}.`
             })
         }
     }
@@ -81,16 +79,16 @@ exports.findCategory = async (req, res) => {
 
 exports.update = async (req, res) => {
     try {
-        const categorie = await Categories.findByIdAndUpdate(req.params.categoryID, req.body).exec();
+        const course = await Courses.findByIdAndUpdate(req.params.courseID, req.body).exec();
 
-        if (!categorie) {
+        if (!course) {
             return res.status(404).json({
-                message: `Cannot update category with id=${req.params.categoryID}. Please check if this already exists.`
+                message: `Cannot update course with id=${req.params.courseID}. Please check if this already exists.`
             });
         }
 
         return res.status(200).json({
-            message: `Category updated successfully!`
+            message: `course updated successfully!`
         });
 
         return
@@ -101,20 +99,20 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const categorie = await Categories.findByIdAndRemove(req.params.categoryID).exec()
+        const course = await Courses.findByIdAndRemove(req.params.courseID).exec()
 
-        if (!categorie) {
+        if (!course) {
             return res.status(404).json({
-                message: `It is not possible to delete the Category with id=${req.params.categoryID} as it does not exist.`
+                message: `It is not possible to delete the course with id=${req.params.courseID} as it does not exist.`
             });
         } else {
             return res.status(200).json({
-                message: `Category with id=${req.params.categoryID} was successfully deleted!`
+                message: `Course with id=${req.params.courseID} was successfully deleted!`
             })
         }
     } catch (err) {
         return res.status(500).json({
-            message: `Error deleting Category with id=${req.params.categoryID}`
+            message: `Error deleting course with id=${req.params.courseID}`
         });
     };
 }

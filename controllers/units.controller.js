@@ -79,16 +79,16 @@ exports.delete = async (req, res) => {
 
         if (!unit) {
             return res.status(404).json({
-                message: `It is not possible to delete the technique with id=${req.params.unitID} as it does not exist.`
+                message: `It is not possible to delete the unit with id=${req.params.unitID} as it does not exist.`
             });
         } else {
             return res.status(200).json({
-                message: `Technique with id=${req.params.unitID} was successfully deleted!`
+                message: `Unit with id=${req.params.unitID} was successfully deleted!`
             })
         }
     } catch (err) {
         return res.status(500).json({
-            message: `Error deleting technique with id=${req.params.unitID}`
+            message: `Error deleting unit with id=${req.params.unitID}`
         });
     };
 }

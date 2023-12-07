@@ -49,11 +49,11 @@ router.get('/', (req, res) => {
  * @group courses
  * @param {object} id.patch - course ID
  * @returns {object} 200 - course searched by id - ex: {name: "Geriatrics"}
- * @returns {Error} 404 - Categorie does not exist/found
+ * @returns {Error} 404 - course does not exist/found
  * @returns {Error} 500 - Something wrong happened
  */
 router.get('/:courseID', utilities.validateToken, (req, res) => {
-    coursesController.findCategorie(req, res);
+    coursesController.findCourse(req, res);
 })
 
 /**

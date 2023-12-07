@@ -41,19 +41,19 @@ router.get('/', (req, res) => {
 })
 
 /**
- * @route GET /categories/:categorieID
+ * @route GET /categories/:categoryID
  * @group Categories
  * @param {object} id.patch - Category ID
  * @returns {object} 200 - Category searched by id - ex: {name: "Geriatrics"}
  * @returns {Error} 404 - Categorie does not exist/found
  * @returns {Error} 500 - Something wrong happened
  */
-router.get('/:categorieID', (req, res) => {
-    categoriesController.findCategorie(req, res);
+router.get('/:categoryID', (req, res) => {
+    categoriesController.findCategory(req, res);
 })
 
 /**
- * @route PUT /categories/:categorieID
+ * @route PUT /categories/:categoryID
  * @group Categories
  * @param {object} object.body - Change the category name - e.g. {"name":"category name"} 
  * @param {object} id.patch - Category ID
@@ -64,13 +64,13 @@ router.get('/:categorieID', (req, res) => {
  * @returns {Error} 500 - Something wrong happened
  * @security Bearer
  */
-router.put('/:categorieID', async (req, res) => {
+router.put('/:categoryID', async (req, res) => {
     await utilities.isAdmin;
     categoriesController.update(req, res);
 })
 
 /**
- * @route DELETE /categories/:categorieID
+ * @route DELETE /categories/:categoryID
  * @group Categories
  * @param {object} id.patch - Category ID
  * @returns {object} 204 - Category deleted
@@ -80,7 +80,7 @@ router.put('/:categorieID', async (req, res) => {
  * @returns {Error} 500 - Something wrong happened
  * @security Bearer
  */
-router.delete('/:categorieID', async (req, res) => {
+router.delete('/:categoryID', async (req, res) => {
     await utilities.isAdmin;
     categoriesController.delete(req, res);
 })

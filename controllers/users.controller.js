@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
 
     try {
         await user.save();
-        res.status(201).json({ success: true, msg: "Novo Utilizador criado com sucesso.", URL: `/user/${user._id}` })
+        res.status(201).json({ success: true, msg: "New User created successfully.", URL: `/user/${user._id}` })
     } catch (err) {
         if (err.name === "ValidationError") {
             let errors = [];
@@ -61,7 +61,7 @@ exports.register = async (req, res) => {
             return res.status(400).json({ success: false, msgs: errors });
         } else {
             res.status(500).json({
-                success: false, msg: err.message || "Ocorreu algum erro ao criar o utilizador."
+                success: false, msg: err.message || "An error occurred while creating the user."
             });
         }
     }
@@ -80,7 +80,7 @@ exports.getAll = async (req, res) => {
             Object.keys(err.errors).forEach(key => {
                 errors.push(err.errors[key].message);
             });
-            return res.status(400).json({ success: false, msg: err.message || "Ocorreu algum erro ao recuperar os utilizadores." })
+            return res.status(400).json({ success: false, msg: err.message || "An error occurred while retrieving users." })
         }
     }
 }
@@ -90,7 +90,7 @@ exports.findUser = async (req, res) => {
         const user = await User.findById(req.params.userID).exec();
 
         if (user === null) {
-            res.status(404).json({ success: false, msg: `Não foi possível encontrar nenhum utilizador com o ID ${req.params.userID}` })
+            res.status(404).json({ success: false, msg: `Could not find any user with the ID ${req.params.userID}` })
         }
 
         res.json({ success: true, user: user })
@@ -100,7 +100,7 @@ exports.findUser = async (req, res) => {
             Object.keys(err.errors).forEach(key => {
                 errors.push(err.errors[key].message);
             });
-            return res.status(400).json({ success: false, msg: `Erro ao recuperar o utilizador com ID ${req.params.userID}.` })
+            return res.status(400).json({ success: false, msg: `Error retrieving user ID ${req.params.userID}.` })
         }
     }
 }
@@ -110,16 +110,16 @@ exports.update = async (req, res) => {
         const user = await User.findByIdAndUpdate(req.params.userID, req.body).exec();
 
         if (!user) {
-            return res.status(404).json({ success: false, msg: `Não é possível atualizar o utilizador com id=${req.params.userID}. Verifica se utilizador existe!` });
+            return res.status(404).json({ success: false, msg: `Cannot update user with id=${req.params.userID}. Check if user exists!` });
         }
-        res.status(200).json({ success: true, msg: `Utilizador id=${req.params.userID} foi atualizado com sucesso!` });
+        res.status(200).json({ success: true, msg: `User id=${req.params.userID} has been updated successfully!` });
     } catch (err) {
         if (err.name === "ValidationError") {
             let errors = [];
             Object.keys(err.errors).forEach(key => {
                 errors.push(err.errors[key].message);
             });
-            return res.status(400).json({ success: false, msg: `Erro ao alterar o utilizador com ID ${req.params.userID}.` })
+            return res.status(400).json({ success: false, msg: `Error when changing user ID ${req.params.userID}.` })
         }
     }
 }
