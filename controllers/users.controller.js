@@ -84,7 +84,7 @@ exports.getAll = async (req, res) => {
                 image: data[i].image,
                 type: data[i].type,
                 completedCourses: data[i].completedCourses.length,
-                createdUser: data[i].createdUser,
+                createdUser: data[i].createdUser.toISOString().split("T")[0], // search only the value of the date
             }
 
             userData.push(newData)

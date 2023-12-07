@@ -10,7 +10,7 @@ const schema = new mongoose.Schema({
     active: { type: Boolean, default: true },
     completedCourses: { type: Array, default: [] },
     coursesInProgress: { type: Array, default: [] },
-    createdUser: { type: Date, required: [true, 'A password is missing!']}
+    createdUser: { type: Date, required: [true, 'A createdUser is missing!']}
 });
 const User = mongoose.model("Users", schema);
 
