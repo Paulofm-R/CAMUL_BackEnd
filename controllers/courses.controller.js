@@ -31,7 +31,6 @@ exports.getAll = async (req, res) => {
             .select('title units image description categories time')
             .exec();
 
-        console.log(data);
 
         const coursesData = [];
 
