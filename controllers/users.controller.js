@@ -37,7 +37,7 @@ exports.login = async (req, res) => {
             return res.status(400).json({ success: false, msgs: errors });
         }
         else
-            res.status(500).json({ success: false, msg: err.message || "An error occurred while logging in." });
+            return res.status(500).json({ success: false, msg: err.message || "An error occurred while logging in." });
     }
 }
 
@@ -51,7 +51,7 @@ exports.register = async (req, res) => {
 
     try {
         await user.save();
-        res.status(201).json({ success: true, msg: "New User created successfully.", URL: `/user/${user._id}` })
+        return res.status(201).json({ success: true, msg: "New User created successfully.", URL: `/user/${user._id}` })
     } catch (err) {
         if (err.name === "ValidationError") {
             let errors = [];
@@ -60,7 +60,7 @@ exports.register = async (req, res) => {
             });
             return res.status(400).json({ success: false, msgs: errors });
         } else {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false, msg: err.message || "An error occurred while creating the user."
             });
         }
@@ -106,10 +106,10 @@ exports.findUser = async (req, res) => {
         const user = await User.findById(req.params.userID).exec();
 
         if (user === null) {
-            res.status(404).json({ success: false, msg: `Could not find any user with the ID ${req.params.userID}` })
+            return status(404).json({ success: false, msg: `Could not find any user with the ID ${req.params.userID}` })
         }
 
-        res.json({ success: true, user: user })
+        return res.json({ success: true, user: user })
     } catch (err) {
         if (err.name === "ValidationError") {
             let errors = [];
@@ -128,7 +128,7 @@ exports.update = async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, msg: `Cannot update user with id=${req.params.userID}. Check if user exists!` });
         }
-        res.status(200).json({ success: true, msg: `User id=${req.params.userID} has been updated successfully!` });
+        return res.status(200).json({ success: true, msg: `User id=${req.params.userID} has been updated successfully!` });
     } catch (err) {
         if (err.name === "ValidationError") {
             let errors = [];
@@ -136,6 +136,26 @@ exports.update = async (req, res) => {
                 errors.push(err.errors[key].message);
             });
             return res.status(400).json({ success: false, msg: `Error when changing user ID ${req.params.userID}.` })
+        }
+    }
+}
+
+exports.delete = async (req, res) => {
+    try {
+        const user = await User.findByIdAndRemove(req.params.userID).exec()
+
+        if (!user) {
+            return res.status(404).json({ message: `It is not possible to delete the user with id=${req.params.userID}. Perhaps the user was not found!` });
+        } else {
+            return res.status(200).json({ message: `User with id=${req.params.userID} was successfully deleted` })
+        }
+    } catch (err) {
+        if (err.name === "ValidationError") {
+            let errors = [];
+            Object.keys(err.errors).forEach(key => {
+                errors.push(err.errors[key].message);
+            });
+            return res.status(400).json({ success: false, msg: `Error deleting user with ID ${req.params.userID}.` })
         }
     }
 }
