@@ -28,11 +28,31 @@ exports.getAll = async (req, res) => {
     try {
         let data = await Courses
             .find()
-            .select('title units description categories time')
+            .select('title units image description categories time')
             .exec();
+
+        console.log(data);
+
+        const coursesData = [];
+
+        // handle the values to be returned by the API
+        for (let i = 0; i < data.length; i++) {
+            const newData = {
+                _id: data[i]._id,
+                title: data[i].title,
+                units: data[i].units.length,
+                image: data[i].image,
+                categories: data[i].categories,
+                description: data[i].description,
+                time: data[i].time,
+            }
+
+            coursesData.push(newData)
+        }
+
         return res.status(200).json({
             success: true,
-            courses: data
+            courses: coursesData
         });
     } catch (err) {
         if (err.name === "ValidationError") {

@@ -71,9 +71,25 @@ exports.getAll = async (req, res) => {
     try {
         let data = await User
             .find()
-            .select('name image type')
+            .select('name image type createdUser completedCourses')
             .exec();
-        res.status(200).json({ success: true, user: data });
+
+        const userData = [];
+
+        // handle the values to be returned by the API
+        for (let i = 0; i < data.length; i++) {
+            const newData = {
+                _id: data[i]._id,
+                name: data[i].name,
+                image: data[i].image,
+                type: data[i].type,
+                completedCourses: data[i].completedCourses.length,
+                createdUser: data[i].createdUser,
+            }
+
+            userData.push(newData)
+        }
+        return res.status(200).json({ success: true, user: userData });
     } catch (err) {
         if (err.name === "ValidationError") {
             let errors = [];
