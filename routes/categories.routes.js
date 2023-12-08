@@ -33,7 +33,7 @@ router.post('/',
 /**
  * @route GET /categories
  * @group Categories
- * @returns {object} 200 - List of categories - e.g. [{name: "Geriatrics"}, {...}]
+ * @returns {object} 200 - List of categories e.g. [{name: "Geriatrics"}, {...}]
  * @returns {Error} 500 - Something wrong happened
  */
 router.get('/', (req, res) => {
@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
  * @route GET /categories/:categoryID
  * @group Categories
  * @param {object} id.patch - Category ID
- * @returns {object} 200 - Category searched by id - ex: {name: "Geriatrics"}
+ * @returns {object} 200 - Category searched by id e.g. {name: "Geriatrics"}
  * @returns {Error} 404 - Categorie does not exist/found
  * @returns {Error} 500 - Something wrong happened
  */
