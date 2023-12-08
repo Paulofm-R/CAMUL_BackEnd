@@ -7,7 +7,7 @@ const utilities = require('../utilities/utilities.js');
 /**
  * @route POST /faqs
  * @group faqs
- * @param {object} object.body - Form to add faq - e.g. {"title":"faq name"}
+ * @param {object} object.body - Form to add faq - e.g. {"question":"question...", "description": "blablabla", "image": "image.jpg", "categories": ["a", "b", "c"], "userCreated": "admin"}
  * @returns {object} 201 - New faq created successfully!
  * @returns {Error} 400 - Missing data
  * @returns {Error} 401 - You need to be authenticated
@@ -35,7 +35,7 @@ router.post('/',
 /**
  * @route GET /faqs
  * @group faqs
- * @returns {object} 200 - List of faqs - e.g. [{name: "Geriatrics"}, {...}]
+ * @returns {object} 200 - List of faqs - e.g. [{"question":"question...", "description": "blablabla", "categories": ["a", "b", "c"], "userCreated": "admin", "createdFaq": "2023-12-07"}, {...}]
  * @returns {Error} 500 - Something wrong happened
  */
 router.get('/', (req, res) => {
@@ -46,7 +46,7 @@ router.get('/', (req, res) => {
  * @route GET /faqs/:faqID
  * @group faqs
  * @param {object} id.patch - faq ID
- * @returns {object} 200 - faq searched by id - ex: {name: "Geriatrics"}
+ * @returns {object} 200 - faq searched by id - ex: {"question":"question...", "description": "blablabla", "image": "image.jpg", "categories": ["a", "b", "c"], "userCreated": "admin", "createdFaq": "2023-12-07", "answers": [{"user": "user", comment": "blablabla", "votes": 5}]}
  * @returns {Error} 404 - faq does not exist/found
  * @returns {Error} 500 - Something wrong happened
  */
@@ -57,7 +57,7 @@ router.get('/:faqID', utilities.validateToken, (req, res) => {
 /**
  * @route PUT /faqs/:faqID
  * @group faqs
- * @param {object} object.body - Change the faq name - e.g. {"name":"faq name"} 
+ * @param {object} object.body - Change the faq name - e.g. {"answers": [{"user": "user", comment": "blablabla", "votes": 5}} 
  * @param {object} id.patch - faq ID
  * @returns {object} 200 - faq changed
  * @returns {Error} 401 - You need to be authenticated

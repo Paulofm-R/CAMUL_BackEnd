@@ -7,7 +7,7 @@ const utilities = require('../utilities/utilities.js');
 /**
  * @route POST /courses
  * @group courses
- * @param {object} object.body - Form to add course - e.g. {"title":"course name"}
+ * @param {object} object.body - Form to add course - e.g. {"title":"course name", "units": ["unitID1", "unitID2", "unitID3", "unitID4", "unitID5"], "categories": ["category1", "category2", "category3"], "description": "blablabla", "certificate": "blabla", "time": "10mins"}
  * @returns {object} 201 - New course created successfully!
  * @returns {Error} 400 - Missing data
  * @returns {Error} 401 - You need to be authenticated
@@ -37,7 +37,7 @@ router.post('/',
 /**
  * @route GET /courses
  * @group courses
- * @returns {object} 200 - List of courses - e.g. [{name: "Geriatrics"}, {...}]
+ * @returns {object} 200 - List of courses - e.g. [{"title":"course name", "units": ["unitID1", "unitID2", "unitID3", "unitID4", "unitID5"], "categories": ["category1", "category2", "category3"], "description": "blablabla", "certificate": "blabla", "time": "10mins", "features": "blabla", comments: [{"user": "admin", "comment": "blabla", "votes": 5}, {...}], "moreInfo": "blabla", "rating": 4.5}, {...}]
  * @returns {Error} 500 - Something wrong happened
  */
 router.get('/', (req, res) => {
@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
  * @route GET /courses/:courseID
  * @group courses
  * @param {object} id.patch - course ID
- * @returns {object} 200 - course searched by id - ex: {name: "Geriatrics"}
+ * @returns {object} 200 - course searched by id - ex: {"title":"course name", "units": 5, "categories": ["category1", "category2", "category3"], "description": "blablabla", "time": "10mins", "rating": 4.5}
  * @returns {Error} 404 - course does not exist/found
  * @returns {Error} 500 - Something wrong happened
  */
@@ -59,7 +59,7 @@ router.get('/:courseID', utilities.validateToken, (req, res) => {
 /**
  * @route PUT /courses/:courseID
  * @group courses
- * @param {object} object.body - Change the course name - e.g. {"name":"course name"} 
+ * @param {object} object.body - Change the course name - e.g. {"title":"course name", "rating": "4.2", "numberReviews": "10"} 
  * @param {object} id.patch - course ID
  * @returns {object} 200 - course changed
  * @returns {Error} 401 - You need to be authenticated
