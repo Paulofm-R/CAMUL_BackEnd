@@ -7,27 +7,7 @@ const utilities = require('../utilities/utilities.js');
 /**
  * @route POST /units
  * @group Units
- * @param {object} object.body - Form to add units - e.g. {"title":"unit name", "video": "video.mp4", "slide": "unitslides.pdf", "description": "blablabla", "exercises": [{
-        "Group": 1,
-        "questions": [{
-            "question": "blabla",
-            "response": "bla:)",
-            "alternatives": ["a", "b", "c", "d"]
-        }, {
-            "question": "blabla",
-            "response": "bla:)",
-            "alternatives": ["a", "b", "c", "d"]
-        }]
-    }, {
-        "Group": 2,
-        "questions": [{
-            "question": "blabla",
-            "response": "bla:)"
-        }, {
-            "question": "blabla",
-            "response": "bla:)"
-        }]
-    }]}
+ * @param {object} object.body - Form to add units - ex. {"title":"unit name", "video": "video.mp4", "slide": "unitslides.pdf", "description": "blablabla", "exercises": [{"Group": "1", "questions": [{ "question": "blabla", "response": "bla:)", "alternatives": ["a", "b", "c", "d"] }, { "question": "blabla", "response": "bla:)", "alternatives": ["a", "b", "c", "d"]}]}, {"Group": "2", "questions": [{ "question": "blabla", "response": "bla:)" }, { "question": "blabla", "response": "bla:)" }] }]}
  * @returns {object} 201 - New units created successfully!
  * @returns {Error} 400 - Missing data
  * @returns {Error} 401 - You need to be authenticated
@@ -49,33 +29,14 @@ router.post('/',
                 errors: errors.array()
             });
         }
-    })
-    
+    }
+)
+
 /**
  * @route GET /units/:unitID
  * @group Units
  * @param {object} id.patch - Unit ID
- * @returns {object} 200 - Unit searched by id e.g. {"title":"unit name", "video": "video.mp4", "slide": "unitslides.pdf", "description": "blablabla", "exercises": [{
-        "Group": 1,
-        "questions": [{
-            "question": "blabla",
-            "response": "bla:)",
-            "alternatives": ["a", "b", "c", "d"]
-        }, {
-            "question": "blabla",
-            "response": "bla:)",
-            "alternatives": ["a", "b", "c", "d"]
-        }]
-    }, {
-        "Group": 2,
-        "questions": [{
-            "question": "blabla",
-            "response": "bla:)"
-        }, {
-            "question": "blabla",
-            "response": "bla:)"
-        }]
-    }]}
+ * @returns {object} 200 - Unit searched by id e.g. {"title":"unit name", "video": "video.mp4", "slide": "unitslides.pdf", "description": "blablabla", "exercises": [{ "Group": 1, "questions": [...] }]}
  * @returns {Error} 404 - Unit does not exist/found
  * @returns {Error} 500 - Something wrong happened
  */
